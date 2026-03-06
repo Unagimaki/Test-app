@@ -1,73 +1,62 @@
-# React + TypeScript + Vite
+# Testing-app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<img width="1899" height="628" alt="image" src="https://github.com/user-attachments/assets/ab82dfd9-e0a1-4424-a96b-e29873832e85" />
 
-Currently, two official plugins are available:
+## Реализовано по ТЗ
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. **Пагинация**
+- Реализован постраничный запрос через параметры `Skip` и `Take`.
+- Добавлен UI пагинации: `Назад / Вперед`, кнопки страниц, отображение текущей страницы и общего количества товаров.
 
-## React Compiler
+2. **Поиск**
+- Добавлено поле `Поиск`.
+- Поиск отправляется на backend через параметр `Filter`.
+- Запуск поиска происходит по кнопке `Поиск`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+3. **Поиск по названию, описанию, производителю**
+- Поиск работает по данным, которые backend возвращает по `Filter` (включая совпадения в `title`, `description`, `manufacturer`).
+- Дополнительно реализован выбор области поиска (`везде / название / описание / производитель`).
 
-## Expanding the ESLint configuration
+4. **Кол-во товаров на страницу**
+- Поле `Кол-во` связано с `Take`.
+- При изменении количества выполняется повторный запрос и сброс страницы на первую.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+5. **Обработка ошибок нестабильного API**
+- Добавлены всплывающие уведомления (toast) при ошибке запроса.
+- Реализован автоповтор запроса с задержкой.
+- Добавлено текстовое уведомление в зоне списка при ошибке загрузки.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+6. **SPA (одна страница)**
+- Приложение работает как SPA.
+- В роутере оставлена одна рабочая страница: `ProductsPage` (`/`).
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+7. **Разные настройки для Development и Production**
+- Добавлены файлы окружения:
+  - `.env.development`
+  - `.env.production`
+  - `.env.example`
+- Конфигурация окружения централизована в `shared/config/env.ts`.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+8. **Подготовка к разным шаблонам страницы**
+- Реализована система шаблонов `ProductsPage`:
+  - `default`
+  - `compact`
+- Добавлен registry шаблонов и переключение через `VITE_PRODUCTS_TEMPLATE`.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+9. **Адаптивная верстка**
+- Добавлены брейкпоинты и адаптивные стили для:
+  - `layout`
+  - `header/footer`
+  - `products toolbar`
+  - `products list`
+  - карточек товара
+  - пагинации
+  - toast-уведомлений
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+10. **FSD и переиспользуемые UI-компоненты**
+- Выделены переиспользуемые компоненты в `shared/ui`:
+  - `Button`
+  - `Input`
+  - `NumberSelect`
+  - `Toast`
+- Карточка товара вынесена в `entities/product/ui/ProductCard`.
