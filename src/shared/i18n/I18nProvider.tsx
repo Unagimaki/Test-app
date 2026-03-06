@@ -24,8 +24,8 @@ type I18nProviderProps = PropsWithChildren<{
 
 export const I18nProvider = ({ children, locale = detectLocale() }: I18nProviderProps) => {
   const value = useMemo<I18nContextValue>(() => {
-    const t = (key: TranslationKey, params?: TranslateParams) => {
-      const raw = dictionaries[locale][key]
+    const t = (key: TranslationKey, params?: TranslateParams): string => {
+      const raw = String(dictionaries[locale][key])
 
       if (!params) {
         return raw
