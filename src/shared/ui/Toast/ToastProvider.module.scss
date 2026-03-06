@@ -1,0 +1,46 @@
+.viewport {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  min-width: 260px;
+  max-width: 360px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 1.4;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22);
+}
+
+.toast_info {
+  background-color: #2563eb;
+}
+
+.toast_success {
+  background-color: #16a34a;
+}
+
+.toast_error {
+  background-color: #dc2626;
+}
+
+@media (max-width: 640px) {
+  .viewport {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+  }
+
+  .toast {
+    min-width: 0;
+    max-width: 100%;
+  }
+}
